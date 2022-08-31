@@ -10,6 +10,8 @@ Date:   9/10/2021
 from docx.text.paragraph import Paragraph
 import re
 
+from loader import LINK_BEG, LINK_END
+
 Paragraph.text = property(lambda self: GetParagraphText(self))
 
 def GetTag(element):
@@ -26,5 +28,5 @@ def GetParagraphText(paragraph):
         if tag == "w:hyperlink":
             for subChild in child:
                 if GetTag(subChild) == "w:r":
-                    text += subChild.text
+                    text += f'{LINK_BEG}{subChild.text}{LINK_END}'
     return text
